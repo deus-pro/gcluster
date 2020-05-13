@@ -26,10 +26,13 @@ def get_ws_id(ws_name: str, org_name: str) -> str:
 def destroy_cluster(destroy: bool, ws_name: str, org_name: str):
     ws_id = get_ws_id(ws_name, org_name)
     url = "https://app.terraform.io/api/v2/runs"
-    payload = ("{ \"data\": { "
-        "\"attributes\": { \"is-destroy\":{}, \"message\": \"Custom message\" }, "
-        "\"type\":\"runs\", \"relationships\": { \"workspace\": { \"data\": { "
-        "\"type\": \"workspaces\", \"id\": \"{}\" } } } "
-        "} }").format("true" if destroy else "false", ws_id)
+    payload_tupple = ("{ \"data\": { \"attributes\": { \"is-destroy\":",
+        "true" if destroy else "false",
+        ", \"message\": \"Custom message\" }, \"type\":\"runs\", ",
+        "\"relationships\": { \"workspace\": { \"data\": { \"type\": ",
+        "\"workspaces\", \"id\": \"",
+        ws_id,
+        "\" } } } } }")
+    payload = "".join(payload_tupple)
     response = requests.request("POST", url, data=payload, headers=headers)
     print(response.text)
