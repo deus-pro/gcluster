@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import requests
 import os
+import argparse
 
 # Constants for Terraform
 token = os.getenv("TF_API_TOKEN")
@@ -23,7 +24,7 @@ def get_ws_id(ws_name: str, org_name: str) -> str:
     return ws_id
 
 # Initiate run in the workspace
-def destroy_cluster(destroy: bool, ws_name: str, org_name: str):
+def destroy_cluster(ws_name: str, org_name: str, destroy: bool = False):
     ws_id = get_ws_id(ws_name, org_name)
     url = "https://app.terraform.io/api/v2/runs"
     payload_tupple = ("{ \"data\": { \"attributes\": { \"is-destroy\":",
@@ -35,4 +36,14 @@ def destroy_cluster(destroy: bool, ws_name: str, org_name: str):
         "\" } } } } }")
     payload = "".join(payload_tupple)
     response = requests.request("POST", url, data=payload, headers=headers)
-    print(response.text)
+    return response
+
+# Main #
+parser = argparse.ArgumentParser()
+parser.add_argument("-w", "--workspace", type=str, help = "Provide the workspace name")
+parser.add_argument("-o", "--org", type = str, help = "Provide the organisation name")
+parser.add_argument("-d", "--destroy", action="store_true")
+args = parser.parse_args()
+
+result = destroy_cluster(args.workspace, args.org, args.destroy)
+print(result.text)
