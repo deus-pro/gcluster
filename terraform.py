@@ -24,12 +24,13 @@ def get_ws_id(ws_name: str, org_name: str) -> str:
     return ws_id
 
 # Initiate run in the workspace
-def destroy_cluster(ws_name: str, org_name: str, destroy: bool = False):
+def destroy_cluster(ws_name: str, org_name: str, destroy: bool = False, message: str = None):
     ws_id = get_ws_id(ws_name, org_name)
     url = "https://app.terraform.io/api/v2/runs"
     payload_tupple = ("{ \"data\": { \"attributes\": { \"is-destroy\":",
         "true" if destroy else "false",
-        ", \"message\": \"Custom message\" }, \"type\":\"runs\", ",
+        ", \"message\": \"{}\"".format(message) if message else "",
+        " }, \"type\":\"runs\", ",
         "\"relationships\": { \"workspace\": { \"data\": { \"type\": ",
         "\"workspaces\", \"id\": \"",
         ws_id,
@@ -43,7 +44,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-w", "--workspace", type=str, help = "Provide the workspace name")
 parser.add_argument("-o", "--org", type = str, help = "Provide the organisation name")
 parser.add_argument("-d", "--destroy", action="store_true")
+parser.add_argument("-m", "--message", type=str, help = "Provide message for Terraform run")
 args = parser.parse_args()
 
-result = destroy_cluster(args.workspace, args.org, args.destroy)
+result = destroy_cluster(args.workspace, args.org, args.destroy, args.message)
 print(result.text)
