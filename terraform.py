@@ -2,6 +2,7 @@
 import requests
 import os
 import argparse
+import pprint
 
 # Constants for Terraform
 token = os.getenv("TF_API_TOKEN")
@@ -48,4 +49,4 @@ parser.add_argument("-m", "--message", type=str, help = "Provide message for Ter
 args = parser.parse_args()
 
 result = destroy_cluster(args.workspace, args.org, args.destroy, args.message)
-print(result.text)
+pprint.pprint(result.json())
