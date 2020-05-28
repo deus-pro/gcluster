@@ -11,14 +11,14 @@ variable "cloud_key" {
 }
 resource "null_resource" "test" {
 }
-provider "google-beta" {
+provider "google" {
   credentials = var.cloud_key
   project     = "samuel-test-00"
   region      = "us-central1"
   version     = "~> 3.17.0"
 }
 resource "google_container_cluster" "primary" {
-  provider                 = google-beta
+  provider                 = google
   name                     = "dojo-gke-cluster"
   location                 = "us-central1"
   remove_default_node_pool = true
