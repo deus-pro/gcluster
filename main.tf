@@ -6,12 +6,12 @@ resource "null_resource" "test" {
 provider "google" {
   credentials = var.cloud_key
   project     = "samuel-test-00"
-  region      = "us-central1"
+  region      = "us-central1-a"
   version     = "~> 3.12.0"
 }
 resource "google_container_cluster" "primary" {
   name                     = "dojo-gke-cluster"
-  location                 = "us-central1"
+  location                 = "us-central1-a"
   remove_default_node_pool = true
   initial_node_count       = 1
   release_channel          = "RAPID"
