@@ -16,7 +16,7 @@ resource "null_resource" "test" {
 provider "google-beta" {
   credentials = var.cloud_key
   project     = "samuel-test-00"
-  region      = "us-central1-a"
+  region      = "us-central1"
   version     = "~> 3.17.0"
 }
 resource "google_container_cluster" "primary" {
