@@ -3,7 +3,7 @@ variable "cloud_key" {
 }
 resource "null_resource" "test" {
 }
-provider "google" {
+provider "google-beta" {
   credentials = var.cloud_key
   project     = "samuel-test-00"
   region      = "us-central1-a"
