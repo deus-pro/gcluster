@@ -1,3 +1,13 @@
+terraform {
+  backend "remote" {
+    organization = "deus"
+
+    workspaces {
+      name = "gcluster"
+    }
+  }
+}
+
 variable "cloud_key" {
   type = string
 }
