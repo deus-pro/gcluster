@@ -15,7 +15,9 @@ resource "google_container_cluster" "primary" {
   location                 = "us-central1-a"
   remove_default_node_pool = true
   initial_node_count       = 1
-  release_channel          = "RAPID"
+  release_channel {
+    channel = "RAPID"
+  }
 }
 resource "google_container_node_pool" "primary_preemptible_nodes" {
   name     = "dojo-node-pool"
