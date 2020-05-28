@@ -7,7 +7,7 @@ provider "google-beta" {
   credentials = var.cloud_key
   project     = "samuel-test-00"
   region      = "us-central1-a"
-  version     = "~> 3.12.0"
+  version     = "~> 3.17.0"
 }
 resource "google_container_cluster" "primary" {
   name                     = "dojo-gke-cluster"
