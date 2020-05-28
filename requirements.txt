@@ -1,4 +1,3 @@
 requests
-os
 argparse
 pprint
