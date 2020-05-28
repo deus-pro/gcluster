@@ -1,13 +1,11 @@
 terraform {
   backend "remote" {
     organization = "deus"
-
     workspaces {
       name = "gcluster"
     }
   }
 }
-
 variable "cloud_key" {
   type = string
 }
@@ -22,7 +20,7 @@ provider "google-beta" {
 resource "google_container_cluster" "primary" {
   provider                 = google-beta
   name                     = "dojo-gke-cluster"
-  location                 = "us-central1-a"
+  location                 = "us-central1"
   remove_default_node_pool = true
   initial_node_count       = 1
   release_channel {
@@ -31,7 +29,7 @@ resource "google_container_cluster" "primary" {
 }
 resource "google_container_node_pool" "primary_preemptible_nodes" {
   name     = "dojo-node-pool"
-  location = "us-central1-a"
+  location = "us-central1"
   cluster  = google_container_cluster.primary.name
   autoscaling {
     min_node_count = 0
