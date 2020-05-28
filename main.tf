@@ -31,7 +31,7 @@ resource "google_container_cluster" "primary" {
 }
 resource "google_container_node_pool" "primary_preemptible_nodes" {
   name     = "dojo-node-pool"
-  location = "us-central1"
+  location = "us-central1-a"
   cluster  = google_container_cluster.primary.name
   autoscaling {
     min_node_count = 0
