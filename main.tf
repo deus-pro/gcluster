@@ -10,6 +10,7 @@ provider "google-beta" {
   version     = "~> 3.17.0"
 }
 resource "google_container_cluster" "primary" {
+  provider                 = "google-beta"
   name                     = "dojo-gke-cluster"
   location                 = "us-central1-a"
   remove_default_node_pool = true
