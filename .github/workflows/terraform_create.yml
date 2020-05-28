@@ -1,4 +1,4 @@
-name: 'Terraform'
+name: 'Terraform create'
 
 on:
   schedule:
@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  terraform:
+  terraform_create:
     name: 'Create a cluster'
     runs-on: ubuntu-latest
     steps:
@@ -25,6 +25,6 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: run the script
-      run: ./terraform.py -w gcluster -o deus -m "Scheduled run"
+      run: ./terraform.py -w gcluster -o deus -m "Scheduled cluster creation"
       env:
         TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
